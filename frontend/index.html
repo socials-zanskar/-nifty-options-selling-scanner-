@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>NIFTY Options-Selling Scanner</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header class="topbar">
+  <div class="topbar__title">
+    <h1>NIFTY Options-Selling Scanner</h1>
+    <span class="subtitle">Live option-chain analytics for call &amp; put sellers</span>
+  </div>
+  <div class="status" id="status">
+    <span class="status__dot" id="statusDot"></span>
+    <span id="statusText">connecting…</span>
+  </div>
+</header>
+
+<div id="errorBanner" class="error-banner" hidden></div>
+
+<section class="controls" aria-label="Scanner filters">
+  <label class="control">
+    <span>Expiry</span>
+    <select id="expirySelect"></select>
+  </label>
+  <label class="control">
+    <span>Side</span>
+    <select id="sideSelect">
+      <option value="ALL">All</option>
+      <option value="CE">Call Selling</option>
+      <option value="PE">Put Selling</option>
+    </select>
+  </label>
+  <label class="control control--range">
+    <span>Delta range</span>
+    <span class="range-inputs">
+      <input type="number" id="deltaMin" step="0.01" min="0" max="1" value="0.10" />
+      <span>–</span>
+      <input type="number" id="deltaMax" step="0.01" min="0" max="1" value="0.35" />
+    </span>
+  </label>
+  <label class="control">
+    <span>Min OI</span>
+    <input type="number" id="minOi" step="1000" min="0" value="50000" />
+  </label>
+  <label class="control">
+    <span>Min Volume</span>
+    <input type="number" id="minVolume" step="1000" min="0" value="0" />
+  </label>
+</section>
+
+<section class="summary" id="summary" aria-label="Market overview"></section>
+
+<section class="candidates" id="candidates" aria-label="Top opportunities"></section>
+
+<section class="charts" id="charts" aria-label="Chain visualisations"></section>
+
+<section class="table-wrap" aria-label="Ranked option chain">
+  <table id="scanTable">
+    <thead>
+      <tr>
+        <th>Strike</th>
+        <th>Type</th>
+        <th>LTP</th>
+        <th>IV%</th>
+        <th>IV vs ATM</th>
+        <th>OI</th>
+        <th>OI Δ</th>
+        <th>Volume</th>
+        <th>Delta</th>
+        <th>Theta</th>
+        <th>Theta Eff%</th>
+        <th>Gamma</th>
+        <th>Vega</th>
+        <th>Distance%</th>
+        <th>Breakeven</th>
+        <th>BE Dist%</th>
+        <th>Score</th>
+      </tr>
+    </thead>
+    <tbody id="scanBody"></tbody>
+  </table>
+</section>
+
+<p class="disclaimer">
+  Click any ranked row to see how its score was built. The Seller Opportunity Score ranks eligible contracts against
+  each other under the selected filters &mdash; it is not a probability of profit. Rows outside the delta/OI/volume
+  filters are shown grayed out below the ranked list.
+</p>
+
+<script src="charts.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

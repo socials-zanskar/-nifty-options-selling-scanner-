@@ -1,0 +1,7 @@
+nubra-sdk
+fastapi
+uvicorn[standard]
+python-dotenv
+pytz
+pytest
+httpx2

@@ -1,0 +1,12 @@
+# Credentials and cached session tokens -- never commit these
+.env
+auth_data.db*
+
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.playwright-mcp/
+
+# Large demo recordings -- keep local, don't bloat repo history
+assets/*.mp4

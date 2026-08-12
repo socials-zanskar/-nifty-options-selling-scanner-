@@ -1,0 +1,250 @@
+:root {
+  color-scheme: light;
+  --page: #f9f9f7;
+  --surface: #fcfcfb;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --muted: #898781;
+  --gridline: #e1e0d9;
+  --baseline: #c3c2b7;
+  --border: rgba(11, 11, 11, 0.10);
+  --good: #0ca30c;
+  --warning: #fab219;
+  --serious: #ec835a;
+  --critical: #d03b3b;
+  --accent: #2a78d6;
+  /* categorical series slots -- validated for CVD separation & contrast */
+  --series-1: #2a78d6;  /* calls */
+  --series-2: #eb6834;  /* puts  */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    --page: #0d0d0d;
+    --surface: #1a1a19;
+    --text-primary: #ffffff;
+    --text-secondary: #c3c2b7;
+    --muted: #898781;
+    --gridline: #2c2c2a;
+    --baseline: #383835;
+    --border: rgba(255, 255, 255, 0.10);
+    --good: #0ca30c;
+    --warning: #fab219;
+    --serious: #ec835a;
+    --critical: #d03b3b;
+    --accent: #3987e5;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+  }
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text-primary);
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  padding: 20px 24px 48px;
+}
+
+.topbar {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+.topbar h1 { font-size: 1.4rem; margin: 0; }
+.subtitle { color: var(--text-secondary); font-size: 0.85rem; margin-left: 10px; }
+
+.status { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); }
+.status__dot { width: 9px; height: 9px; border-radius: 50%; background: var(--muted); flex-shrink: 0; }
+.status__dot.fresh { background: var(--good); }
+.status__dot.aging { background: var(--warning); }
+.status__dot.stale { background: var(--critical); }
+
+.error-banner {
+  background: rgba(208, 59, 59, 0.12);
+  border: 1px solid var(--critical);
+  color: var(--critical);
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  font-size: 0.9rem;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+}
+.control { display: flex; flex-direction: column; gap: 4px; font-size: 0.78rem; color: var(--text-secondary); }
+.control select, .control input {
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  background: var(--page);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 8px;
+}
+.control input[type="number"] { width: 90px; }
+.range-inputs { display: flex; align-items: center; gap: 6px; color: var(--text-secondary); }
+.range-inputs input { width: 70px; }
+
+.summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.tile {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+}
+.tile__label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.03em; }
+.tile__value { font-size: 1.25rem; font-weight: 600; margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+.candidates {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.candidate-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.candidate-card__empty { color: var(--muted); font-size: 0.9rem; }
+.candidate-card__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+.candidate-card__title { font-size: 0.8rem; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.03em; }
+.candidate-card__contract { font-size: 1.15rem; font-weight: 700; margin: 2px 0 12px; }
+.candidate-card__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 16px; font-size: 0.85rem; }
+.candidate-card__grid div span { display: block; color: var(--muted); font-size: 0.72rem; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+}
+.badge-good { color: var(--good); background: rgba(12, 163, 12, 0.10); }
+.badge-warning { color: var(--warning); background: rgba(250, 178, 25, 0.14); }
+.badge-serious { color: var(--serious); background: rgba(236, 131, 90, 0.14); }
+.badge-critical { color: var(--critical); background: rgba(208, 59, 59, 0.12); }
+.badge-none { color: var(--muted); background: rgba(137, 135, 129, 0.12); }
+
+.table-wrap {
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; min-width: 1100px; }
+thead th {
+  text-align: right;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--gridline);
+  white-space: nowrap;
+}
+thead th:nth-child(1), thead th:nth-child(2) { text-align: left; }
+tbody td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--gridline);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+tbody td:nth-child(1), tbody td:nth-child(2) { text-align: left; }
+tbody tr.ineligible { opacity: 0.45; }
+tbody tr:hover { background: rgba(137, 135, 129, 0.08); }
+.type-ce { color: var(--series-1); font-weight: 600; }
+.type-pe { color: var(--series-2); font-weight: 600; }
+tbody tr.expandable { cursor: pointer; }
+
+.disclaimer { color: var(--muted); font-size: 0.75rem; margin-top: 14px; max-width: 900px; }
+
+/* --- charts --------------------------------------------------------------- */
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 14px;
+  margin-bottom: 22px;
+}
+.chart {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px 16px 10px;
+  margin: 0;
+  min-width: 0;
+}
+.chart--wide { grid-column: 1 / -1; }
+.chart__title { font-size: 0.85rem; font-weight: 600; margin-bottom: 2px; }
+.chart__note { font-weight: 400; font-size: 0.72rem; color: var(--muted); margin-left: 6px; }
+.chart__svg { width: 100%; height: auto; display: block; margin-top: 6px; overflow: visible; }
+.chart__empty { color: var(--muted); font-size: 0.85rem; padding: 20px 0; }
+.chart__legend { display: flex; gap: 14px; font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; }
+.chart__legend-item { display: inline-flex; align-items: center; gap: 6px; }
+.chart__swatch { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+
+.chart-tooltip {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  background: var(--surface);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 9px;
+  font-size: 0.78rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- score breakdown ------------------------------------------------------ */
+
+.breakdown-row td { padding: 0; background: rgba(137, 135, 129, 0.06); }
+/* The table scrolls horizontally, so a plain full-width detail cell would push
+   its right-hand content off-screen. Pin the panel to the viewport's left edge
+   instead, so the whole breakdown stays visible at any scroll position. */
+.breakdown {
+  position: sticky;
+  left: 0;
+  width: calc(100vw - 60px);
+  box-sizing: border-box;
+  padding: 14px 16px;
+}
+.breakdown__head { font-size: 0.82rem; color: var(--text-secondary); margin-bottom: 12px; }
+.breakdown__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px 20px;
+}
+.breakdown__label { font-size: 0.75rem; color: var(--text-primary); margin-bottom: 4px; }
+.breakdown__label span { color: var(--muted); font-size: 0.7rem; margin-left: 4px; }
+.breakdown__track { height: 7px; background: var(--gridline); border-radius: 4px; overflow: hidden; }
+.breakdown__fill { height: 100%; background: var(--series-1); border-radius: 4px; }
+.breakdown__value { font-size: 0.72rem; color: var(--text-secondary); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.breakdown__foot { font-size: 0.72rem; color: var(--muted); margin: 12px 0 0; }
